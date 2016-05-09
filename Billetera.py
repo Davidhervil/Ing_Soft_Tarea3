@@ -32,12 +32,13 @@ class BilleteraElectronica:
         self.__recargas.append(credito)
         self.__saldo += credito.monto
     
-    def consumir(self,debito):
-        if(self.__saldo>=debito.monto):
-            self.__saldo -= debito.monto
-            self.__consumos.append(debito)
-        else:
-            raise ValueError('Saldo insuficiente, transaccion invalida')
+    def consumir(self,PIN,debito):
+        if(self.__PIN==PIN):
+            if(self.__saldo>=debito.monto):
+                self.__saldo -= debito.monto
+                self.__consumos.append(debito)
+            else:
+                raise ValueError('Saldo insuficiente, transaccion invalida')
     
     def saldo(self):
         return self.__saldo
