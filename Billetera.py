@@ -6,16 +6,16 @@ Created on May 8, 2016
 from datetime import date
 class Transaccion:
     
-    def __init__(self,monto,fecha,id):
-        self.monto=monto
-        self.fecha=fecha
-        self.idEstablecimiento=id
+    def __init__(self, monto, fecha, id):
+        self.monto = monto
+        self.fecha = fecha
+        self.idEstablecimiento = id
         
 class BilleteraElectronica:
     '''
     classdocs
     '''
-    def __init__(self, Id,nombres,apellidos,CI,PIN):
+    def __init__(self, Id, nombres, apellidos, CI, PIN):
         '''
         Constructor
         '''
@@ -28,13 +28,13 @@ class BilleteraElectronica:
         self.__consumos = []
         self.__saldo = 0
     
-    def recargar(self,credito):
+    def recargar(self, credito):
         self.__recargas.append(credito)
         self.__saldo += credito.monto
     
-    def consumir(self,PIN,debito):
-        if(self.__PIN==PIN):
-            if(self.__saldo>=debito.monto):
+    def consumir(self, PIN, debito):
+        if(self.__PIN == PIN):
+            if(self.__saldo >= debito.monto):
                 self.__saldo -= debito.monto
                 self.__consumos.append(debito)
             else:
