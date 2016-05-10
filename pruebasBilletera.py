@@ -62,6 +62,17 @@ class BilleteraTester(unittest.TestCase):
         miBilletera.consumir(4561, debito)
         self.assertEquals(miBilletera.saldo(), 970680)
         
+    def testRecargaYConsumoDecimal(self):
+        miBilletera = BilleteraElectronica("MiBilletera", "Eliot", "Hernandez", 23711366, 4561)
+        fecha = date(2016,2,23)
+        credito = Transaccion(25.97068085, fecha, "Casa")
+        miBilletera.recargar(credito)
+        debito = Transaccion(20.987654321, fecha, "Casa")
+        miBilletera.consumir(4561, debito)
+        self.assertEquals(miBilletera.saldo(), (25.97068085-20.987654321))
+        
+    
+        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
