@@ -10,12 +10,29 @@ import unittest
 
 class BilleteraTester(unittest.TestCase):
 
+    def testUsuarioConNombreSimple(self):
+        miBilletera = BilleteraElectronica("MiBilletera", "Eliot", "Hernandez", 23711366, 4561)
+        self.assertEquals(miBilletera.nombres_list,["Eliot"])
+    
+    def testUsuarioConNombreMultiple(self):
+        miBilletera = BilleteraElectronica("MiBilletera", "Eliot David", "Hernandez", 23711366, 4561)
+        self.assertEquals(miBilletera.nombres_list,["Eliot","David"])
+            
+    def testUsuarioConApellidoSimple(self):
+        miBilletera = BilleteraElectronica("MiBilletera", "Eliot", "Hernandez", 23711366, 4561)
+        self.assertEquals(miBilletera.apellidos_list,["Hernandez"])
+    
+    def testUsuarioConApellidoMultiple(self):
+        miBilletera = BilleteraElectronica("MiBilletera", "Eliot", "Hernandez Diaz", 23711366, 4561)
+        self.assertEquals(miBilletera.apellidos_list,["Hernandez","Diaz"])
+        
     def testRecargaSimple(self):
         miBilletera = BilleteraElectronica("MiBilletera", "Eliot", "Hernandez", 23711366, 4561)
         fecha = date(2016,2,23)
         credito = Transaccion(123, fecha, 117)
         miBilletera.recargar(credito)
         self.assertEquals(miBilletera.saldo(), 123)
+        
 
     def testConsumirConPINCorrecto(self):
         miBilletera = BilleteraElectronica("MiBilletera", "Eliot", "Hernandez", 23711366, 4561)
@@ -36,13 +53,16 @@ class BilleteraTester(unittest.TestCase):
         self.assertEquals(miBilletera.saldo(), 234)
 
     def testConsumirSinSaldoSuficiente(self):
-        miBilletera = BilleteraElectronica("MiBilletera", "Eliot", "Hernandez", 23711366, 4561)
-        fecha = date(2016,2,23)
-        credito = Transaccion(100, fecha, "Casa")
-        miBilletera.recargar(credito)
-        debito = Transaccion(122, fecha, "Restaurant El Paso")
-        miBilletera.consumir(4561, debito)
-        self.assertEquals(miBilletera.saldo(), 100)
+        try:
+            miBilletera = BilleteraElectronica("MiBilletera", "Eliot", "Hernandez", 23711366, 4561)
+            fecha = date(2016,2,23)
+            credito = Transaccion(100, fecha, "Casa")
+            miBilletera.recargar(credito)
+            debito = Transaccion(122, fecha, "Restaurant El Paso")
+            miBilletera.consumir(4561, debito)
+            print("Fallo de encuentro de Error")
+        except:
+            print("Saldo insuficiente, transaccion invalida")
         
     def testRecargaNegativa(self):
         miBilletera = BilleteraElectronica("MiBilletera", "Eliot", "Hernandez", 23711366, 4561)
