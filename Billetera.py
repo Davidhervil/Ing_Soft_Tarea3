@@ -1,40 +1,57 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 '''
 Created on May 8, 2016
 
 @author: David Hernandez
 '''
-from datetime import date
+import datetime
+from decimal import *
+
 class Transaccion:
     
-    def __init__(self,monto,fecha,id):
-        self.monto=monto
-        self.fecha=fecha
-        self.idEstablecimiento=id
+    def __init__(self, monto, id):
+        getcontext().prec = 10
+        self.monto = Decimal(monto)
+        self.fecha = datetime.datetime.now()
+        self.idEstablecimiento = id
         
 class BilleteraElectronica:
     '''
-    classdocs
+    Classdocs
     '''
-    def __init__(self, Id,nombres,apellidos,CI,PIN):
+    def __init__(self, Id, nombres, apellidos, CI, PIN):
         '''
         Constructor
         '''
+        #try:
+        getcontext().prec = 10
         self.__Id = Id
-        self.nombres_list = nombres.split(' ')
-        self.apellidos_list = apellidos.split(' ')
+        self.nombres = nombres
+        self.apellidos = apellidos
         self.CI = CI
         self.__PIN = PIN
         self.__recargas = []
         self.__consumos = []
-        self.__saldo = 0
+        self.__saldo = Decimal(0)
+        assert((type(self.__Id) is str ) and self.__Id.isdigit())
+        assert(type(self.nombres) is str)
+        assert(type(self.apellidos) is str)
+        assert((type(self.CI) is int) and self.CI>0)
+        assert((type(self.__PIN) is str) and self.__PIN.isdigit())
+        #except:
+        #    raise ValueError('Error de tipo al construir')
     
-    def recargar(self,credito):
+    def recargar(self, credito):
         self.__recargas.append(credito)
-        self.__saldo += credito.monto
+        if(credito.monto>0):
+            self.__saldo += credito.monto
+        else:
+            raise ValueError('No se puede recargar montos menores o iguales a 0')
     
-    def consumir(self,PIN,debito):
-        if(self.__PIN==PIN):
-            if(self.__saldo>=debito.monto):
+    def consumir(self, PIN, debito):
+        if(self.__PIN == PIN and debito.monto>=0):
+            if(self.__saldo >= debito.monto):
                 self.__saldo -= debito.monto
                 self.__consumos.append(debito)
             else:
