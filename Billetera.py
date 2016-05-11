@@ -6,10 +6,12 @@ Created on May 8, 2016
 @author: David Hernandez
 '''
 import datetime
-import decimal
+from decimal import *
+
 class Transaccion:
     
     def __init__(self, monto, id):
+        getcontext().prec = 10
         self.monto = Decimal(monto)
         self.fecha = datetime.datetime.now()
         self.idEstablecimiento = id
@@ -22,22 +24,23 @@ class BilleteraElectronica:
         '''
         Constructor
         '''
-        try:
-            self.__Id = Id
-            self.nombres = nombres
-            self.apellidos = apellidos
-            self.CI = CI
-            self.__PIN = PIN
-            self.__recargas = []
-            self.__consumos = []
-            self.__saldo = Decimal(0)
-            assert(type(self.__Id) is int)
-            assert(type(self.nombres_list) is str)
-            assert(type(self.apellidos_list) is str)
-            assert((type(self.CI) is int) and self.CI>0)
-            assert((type(self.__PIN) is str) and self.__PIN.isnumeric())
-        except:
-            raise ValueError('Error de tipo al construir')
+        #try:
+        getcontext().prec = 10
+        self.__Id = Id
+        self.nombres = nombres
+        self.apellidos = apellidos
+        self.CI = CI
+        self.__PIN = PIN
+        self.__recargas = []
+        self.__consumos = []
+        self.__saldo = Decimal(0)
+        assert(type(self.__Id) is int)
+        assert(type(self.nombres) is str)
+        assert(type(self.apellidos) is str)
+        assert((type(self.CI) is int) and self.CI>0)
+        assert((type(self.__PIN) is str) and self.__PIN.isdigit())
+        #except:
+        #    raise ValueError('Error de tipo al construir')
     
     def recargar(self, credito):
         self.__recargas.append(credito)
