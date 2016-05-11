@@ -11,7 +11,15 @@ import unittest
 
 
 class BilleteraTester(unittest.TestCase):
-
+    
+    def testUsuarioConNombreEspecial(self):
+        miBilletera = BilleteraElectronica("MiBilletera", "Ñángara", "Diaz", 23711366, 4561)
+        self.assertEquals(miBilletera.nombres_list,["Ñángara"])
+    
+    def testUsuarioConApellidoEspecial(self):
+        miBilletera = BilleteraElectronica("MiBilletera", "David", "Ñángara", 23711366, 4561)
+        self.assertEquals(miBilletera.apellidos_list,["Ñángara"])
+    
     def testUsuarioConNombreSimple(self):
         miBilletera = BilleteraElectronica("MiBilletera", "Eliot", "Hernandez", 23711366, 4561)
         self.assertEquals(miBilletera.nombres_list,["Eliot"])
