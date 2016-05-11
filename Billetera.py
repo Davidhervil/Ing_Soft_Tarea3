@@ -30,10 +30,11 @@ class BilleteraElectronica:
     
     def recargar(self, credito):
         self.__recargas.append(credito)
-        self.__saldo += credito.monto
+        if(credito.monto>=0):
+            self.__saldo += credito.monto
     
     def consumir(self, PIN, debito):
-        if(self.__PIN == PIN):
+        if(self.__PIN == PIN and debito.monto>=0):
             if(self.__saldo >= debito.monto):
                 self.__saldo -= debito.monto
                 self.__consumos.append(debito)
