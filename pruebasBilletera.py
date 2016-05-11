@@ -35,7 +35,7 @@ class BilleteraTester(unittest.TestCase):
         miBilletera.consumir(4562, debito)
         self.assertEquals(miBilletera.saldo(), 234)
 
-    def testConsumirSinSaldo(self):
+    def testConsumirSinSaldoSuficiente(self):
         miBilletera = BilleteraElectronica("MiBilletera", "Eliot", "Hernandez", 23711366, 4561)
         fecha = date(2016,2,23)
         credito = Transaccion(100, fecha, "Casa")
