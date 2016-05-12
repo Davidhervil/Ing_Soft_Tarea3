@@ -34,7 +34,7 @@ class BilleteraElectronica:
         self.__recargas = []
         self.__consumos = []
         self.__saldo = Decimal(0)
-        assert(type(self.__Id) is int)
+        assert((type(self.__Id) is str ) and self.__Id.isdigit())
         assert(type(self.nombres) is str)
         assert(type(self.apellidos) is str)
         assert((type(self.CI) is int) and self.CI>0)
